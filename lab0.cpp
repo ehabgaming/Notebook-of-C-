@@ -2,14 +2,16 @@
 //
 
 #include <iostream>
-
+using namespace std;
 
 bool IsLeapYear(int Year);
 int DaysInMonth(int Month, int Year);
-int DaysInYear(int Month, int Year,int Days);
+int DaysInYear(int Month, int Year, int Days);
 int AddYear(int Year);
+string DayOfWeek(int DayValue);
 
-using namespace std;
+
+
 int main()
 {
     int Month, Day, Year;
@@ -21,9 +23,8 @@ int main()
     cout << "\nInput a Year: ";
     cin >> Year;
 
-    cout << "\nThe date enterd is: " << Month << "/" << Day << "/" << Year << endl;
+    cout << "\n "<<DayOfWeek(AddYear(Year) + DaysInYear(Month, Year, Day))<< " " << Month << "/" << Day << "/" << Year << " has a day value of " << AddYear(Year) + DaysInYear(Month, Year, Day)  << endl;
 
-    cout << AddYear(Year) + DaysInYear(Month,Year,Day);
     return 0;
 
 
@@ -58,13 +59,13 @@ int DaysInMonth(int Month, int Year)
         return 30;                                                      //If the Month is 4(April), 6(June), 9(September), 11(November)
     case 2:                                                             //then the number of days in that month is 30.
         return IsLeapYear(Year) ? 29 : 28;   //Short Hand If-Else       //
-                                                                        //If the Month is 2(February)
+        //If the Month is 2(February)
     default:                                                            //then the number of days in that month is 28 But if its a Leap Year, Then the number of days in that month is 29.
         break;                                                          //
     }                                                                   //If the number is not any of the months(1-12) then its Invalid
 }
 
-int DaysInYear(int Month, int Year,int Days)
+int DaysInYear(int Month, int Year, int Days)
 {
     int DayValue{};
     for (int i = 1; i < Month; i++)
@@ -82,7 +83,7 @@ int AddYear(int Year)
     int TotalDays{};
     for (int i = 1900; i < Year; i++)
     {
-        if (IsLeapYear(Year))
+        if (IsLeapYear(i))
         {
             TotalDays += 366;
         }
@@ -93,3 +94,28 @@ int AddYear(int Year)
     }
     return TotalDays;
 }
+
+string DayOfWeek(int DayValue) {
+    int WeekOfDay = DayValue % 7;
+
+    switch (WeekOfDay)
+    {
+    case 0:
+        return "Sunday";
+    case 1:
+        return "Monday";
+    case 2:
+        return "Tuesday";
+    case 3:
+        return "Wednesday";
+    case 4:
+        return "Thursday";
+    case 5: 
+        return "Friday";
+    case 6:
+        return "Saturday";
+    default:
+        break;
+    }
+}
+
