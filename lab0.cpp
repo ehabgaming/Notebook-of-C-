@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 bool IsLeapYear(int Year);
@@ -15,15 +16,23 @@ string DayOfWeek(int DayValue);
 int main()
 {
     int Month, Day, Year;
+    char DumbLine{};
 
-    cout << "Input a Month: ";
-    cin >> Month;
-    cout << "\nInput a Day: ";
-    cin >> Day;
-    cout << "\nInput a Year: ";
-    cin >> Year;
+    ifstream inFile("dates.txt"); 
 
-    cout << "\n "<<DayOfWeek(AddYear(Year) + DaysInYear(Month, Year, Day))<< " " << Month << "/" << Day << "/" << Year << " has a day value of " << AddYear(Year) + DaysInYear(Month, Year, Day)  << endl;
+    if (!inFile) {
+        cerr << "Error opening file." << endl;
+        return 1;
+    }
+
+    
+    while (inFile >> Month >> DumbLine >> Day >> DumbLine >> Year) {
+        int dayValue = AddYear(Year) + DaysInYear(Month, Year, Day);
+
+        cout << "\n" << DayOfWeek(dayValue) << " "
+            << Month << "/" << Day << "/" << Year
+            << " has a day value of " << dayValue << endl;
+    }
 
     return 0;
 
